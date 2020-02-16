@@ -4,7 +4,7 @@ services:
   pokemon_manager:
     container_name: pokemon_manager
     build:
-      context: ..
+      context: .
     ports:
       - 8010:8000
     networks:
@@ -14,15 +14,18 @@ services:
     container_name: pokemon_db
     image: mysql:5.7
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: 'sample-mysql-db'
-      MYSQL_USER: "root"
+      MYSQL_DATABASE: 'pokemon_manager'
+      MYSQL_USER: "pokemon"
+      MYSQL_PASSWORD: "pokemon"
+      MYSQL_ROOT_PASSWORD: "root"
+      TZ: 'Asia/Tokyo'
     ports:
       - "3306:3306"
+    volumes:
+      - ./db/data/:/var/lib/mysql/
     restart: 'always'
     networks:
       - pokemon_db
-
 
 networks:
   pokemon_db:
