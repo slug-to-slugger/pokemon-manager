@@ -1,6 +1,7 @@
-from rest_framework import serializer
+from rest_framework import serializers
+from pokemon.models import Trainer
 
-class TrainerSerializer(serializer.ModelSerializer):
+class TrainerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trainer
-        field = ['id','created','name','password','user_id']
+        fields = ['id','created','name','password','user_id']
