@@ -77,10 +77,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'pokemon_manager',
-        'USER': 'pokemon', # ログインユーザー名
+        'USER': 'pokemon',  # ログインユーザー名
         'PASSWORD': 'pokemon',
         'HOST': 'pokemon_db',
-        'PORT': 3306, # default
+        'PORT': 3306,  # default
+        'OPTIONS': {
+            'charset': 'utf8mb4'
+        }
     }
 }
 
