@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from pokemon.models import Trainer
+from pokemon.serializer import TrainerSerializer
+from rest_framework import generics
 
-# Create your views here.
+class TrainerList(generics.ListCreateAPIView):
+    queryset = Trainer.objects.all()
+    serializer_class = TrainerSerializer
+
+class TrainerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Trainer.objects.all()
+    serializer_class = TrainerSerializer
