@@ -1,7 +1,6 @@
-from pokemon.models import Trainer, Pokemon
-from pokemon.serializer import TrainerSerializer, PokemonSerializer
+from pokemon.models import Trainer, Partner
+from pokemon.serializer import TrainerSerializer, PartnerSerializer
 from rest_framework import generics
-import logging
 
 class TrainerList(generics.ListCreateAPIView):
     queryset = Trainer.objects.all()
@@ -10,23 +9,11 @@ class TrainerList(generics.ListCreateAPIView):
 class TrainerDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Trainer.objects.all()
     serializer_class = TrainerSerializer
-    # putメソッドをオーバーライド
-    def put(self, request, *args, **kwargs):
-        # request.dataの中身をログに出力
-        logger = logging.getLogger('development')
-        logger.info(request.data)
-        return self.update(request, *args, **kwargs)
 
-class PokemonList(generics.ListCreateAPIView):
-    queryset = Pokemon.objects.all()
-    serializer_class = PokemonSerializer
+class PartnerList(generics.ListCreateAPIView):
+    queryset = Partner.objects.all()
+    serializer_class = PartnerSerializer
 
-class PokemonDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Pokemon.objects.all()
-    serializer_class = PokemonSerializer
-    # putメソッドをオーバーライド
-    def put(self, request, *args, **kwargs):
-        # request.dataの中身をログに出力
-        logger = logging.getLogger('development')
-        logger.info(request.data)
-        return self.update(request, *args, **kwargs)
+class PartnerDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Partner.objects.all()
+    serializer_class = PartnerSerializer
