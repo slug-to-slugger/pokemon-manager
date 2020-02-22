@@ -10,7 +10,7 @@ class Trainer(models.Model):
     class Meta:
         ordering = ['created']
 
-class Pokemon(models.Model):
+class Partner(models.Model):
     GENDER_CHOICES = (
         (1, 'オス'),
         (2, 'メス'),
