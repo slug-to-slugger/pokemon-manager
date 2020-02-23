@@ -5,12 +5,38 @@ services:
     container_name: pokemon_manager
     build:
       context: .
-    ports:
-      - 8010:8000
+    volumes:
+      - socket:/var/run/uwsgi/
+      - static:/var/www/static
+      - .:/var/www/app
+    environment:
+      - TZ=Asia/Tokyo
+      - UWSGI_LISTEN=128
+      - UWSGI_HARAKIRI=1200
+      - UWSGI_PROCESSES=4
+      - UWSGI_MAPSOCKET=0:1,2,3
+      - UWSGI_MAPSOCKETHEALTHCHECK=1:4
+      - UWSGI_RELOADONRSS=1500
+      - UWSGI_PYAUTORELOAD=1
+    restart: always
     depends_on:
       - mysql
     networks:
-      - pokemon_db
+      - pokemon_manager
+
+  nginx:
+    container_name: pokemon_nginx
+    image: nginx:1.15-alpine
+    volumes:
+      - socket:/var/run/uwsgi/
+      - static:/var/www/static
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/uwsgi_params:/etc/nginx/uwsgi_param
+    ports:
+      - 80:80
+    restart: always
+    networks:
+      - pokemon_manager
 
   mysql:
     container_name: pokemon_db
@@ -28,8 +54,11 @@ services:
       - ./db/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf
     restart: 'always'
     networks:
-      - pokemon_db
+      - pokemon_manager
 
+volumes:
+  socket:
+  static:
 networks:
-  pokemon_db:
+  pokemon_manager:
     driver: bridge

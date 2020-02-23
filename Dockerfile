@@ -5,8 +5,12 @@ COPY Pipfile Pipfile.lock /
 RUN pip install pipenv \
 	&& pipenv install --system
 
-COPY ./pokemon_manager /var/www/pokemon_manager
+ADD ./uwsgi/conf/pokemon_manager.ini /etc/uwsgi.d/pokemon_manager.ini
 
-WORKDIR /var/www/pokemon_manager
+COPY ./pokemon_manager /var/www/app/pokemon_manager
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+WORKDIR /var/www/app/pokemon_manager
+
+RUN python manage.py collectstatic --noinput
+
+ENTRYPOINT ["sh", "/var/www/app/docker-entrypoint.sh"]
