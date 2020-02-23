@@ -1,14 +1,16 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+
 class Trainer(models.Model):
     created = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=10) #とりあえず10文字
-    password = models.CharField(max_length=50) #どのくらい必要かわからないのでとりあえず50
-    user_id = models.EmailField(max_length=254) # とりあえずマックスの長さ
+    name = models.CharField(max_length=10)  # とりあえず10文字
+    password = models.CharField(max_length=50)  # どのくらい必要かわからないのでとりあえず50
+    user_id = models.EmailField(max_length=254)  # とりあえずマックスの長さ
 
     class Meta:
         ordering = ['created']
+
 
 class Partner(models.Model):
     GENDER_CHOICES = (
@@ -16,7 +18,7 @@ class Partner(models.Model):
         (2, 'メス'),
         (3, 'その他'),
     )
-    
+
     ATTRIBUTE_CHOICES = (
         (0, "なし"),
         (1, 'ノーマル'),
@@ -39,12 +41,12 @@ class Partner(models.Model):
         (18, '妖'),
     )
 
-    name = models.CharField(max_length=10) #とりあえず10文字
-    special_skill = models.CharField(max_length=255) #とりあえず255文字
+    name = models.CharField(max_length=10)  # とりあえず10文字
+    special_skill = models.CharField(max_length=255)  # とりあえず255文字
     gender = models.IntegerField(choices=GENDER_CHOICES, blank=False, null=False, default=1)
     # 属性
     attribute1 = models.IntegerField(choices=ATTRIBUTE_CHOICES, blank=False, null=False, default=1)
-    attribute2 = models.IntegerField(choices=ATTRIBUTE_CHOICES, blank=True, null=True, default=0) # attribute1と重複しないようにvali
+    attribute2 = models.IntegerField(choices=ATTRIBUTE_CHOICES, blank=True, null=True, default=0)  # attribute1と重複しないようにvali
     # 努力値
     h = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(252)], blank=False, null=False, default=0)
     a = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(252)], blank=False, null=False, default=0)
@@ -56,6 +58,6 @@ class Partner(models.Model):
     # user_info = models.
     created_at = models.DateTimeField(auto_now_add=True)  # レコードが追加された時にその時間を保存します
     updated_at = models.DateTimeField(auto_now=True)  # レコードが更新されたタイミングで現在時間が保存されます。
-    
+
     class Meta:
         ordering = ['created_at']
