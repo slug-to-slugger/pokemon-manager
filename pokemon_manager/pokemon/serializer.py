@@ -1,13 +1,22 @@
-from rest_framework import serializers
-from pokemon.models import Trainer, Partner
 import logging
+
+from django.contrib.auth.hashers import make_password
+from rest_framework import serializers
+
+from pokemon.models import Trainer, Partner
+
 logger = logging.getLogger('development')
 
 
-class TrainerSerializer(serializers.ModelSerializer):
+class TrainerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Trainer
-        fields = ['id', 'created', 'name', 'password', 'user_id']
+        fields = ('id', 'username', 'login_id', 'password', 'created')
+
+    def create(self, validated_data):
+        password = validated_data.get('password')
+        validated_data['password'] = make_password(password)
+        return Trainer.objects.create(**validated_data)
 
 
 class PartnerSerializer(serializers.ModelSerializer):
