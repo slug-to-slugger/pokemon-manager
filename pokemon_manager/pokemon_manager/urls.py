@@ -9,4 +9,4 @@ urlpatterns = [
     path('pokemon/<int:pk>/', views.PartnerDetail.as_view())
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns) # これ要る?
+urlpatterns = format_suffix_patterns(urlpatterns)  # これ要る?
