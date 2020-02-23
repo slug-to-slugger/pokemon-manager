@@ -1,5 +1,6 @@
 db.sqlite3
+*.pyc
+/pokemon_manager/pokemon/migrations
 
 /db/data
 /static
-*.pyc
