@@ -1,15 +1,47 @@
+from django.conf import settings
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from rest_framework.authtoken.models import Token
 
 
-class Trainer(models.Model):
+class Trainer(AbstractBaseUser, PermissionsMixin):
+
+    username_validator = UnicodeUsernameValidator()
+
+    username = models.CharField(
+        max_length=255,
+        unique=True,
+        default='',
+        validators=[username_validator],
+        error_messages={
+            'unique': ("A user with that username already exists."),
+        },
+    )
+    login_id = models.EmailField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(max_length=10)  # とりあえず10文字
-    password = models.CharField(max_length=50)  # どのくらい必要かわからないのでとりあえず50
-    user_id = models.EmailField(max_length=254)  # とりあえずマックスの長さ
+
+    objects = UserManager()
+
+    EMAIL_FIELD = 'login_id'
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['login_id']
 
     class Meta:
         ordering = ['created']
+
+    def clean(self):
+        super().clean()
+        self.login_id = self.__class__.objects.normalize_email(self.login_id)    
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
 
 
 class Partner(models.Model):
