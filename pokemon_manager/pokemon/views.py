@@ -1,6 +1,9 @@
+from rest_framework import generics
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 from pokemon.models import Trainer, Partner
 from pokemon.serializer import TrainerSerializer, PartnerSerializer
-from rest_framework import generics
 
 
 class TrainerList(generics.ListCreateAPIView):
@@ -9,6 +12,8 @@ class TrainerList(generics.ListCreateAPIView):
 
 
 class TrainerDetail(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Trainer.objects.all()
     serializer_class = TrainerSerializer
 
