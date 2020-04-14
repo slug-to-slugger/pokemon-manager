@@ -68,3 +68,20 @@ class Partner(models.Model):
 
     class Meta:
         ordering = ['created_at']
+
+
+class Pokemon(models.Model):
+    guide_num = models.CharField(max_length=255, null=False)
+    name = models.CharField(max_length=255, null=False)
+    type1 = models.CharField(max_length=255, null=True, default='')
+    type2 = models.CharField(max_length=255, null=True, default='')
+    ability1 = models.CharField(max_length=255, null=True, default='')
+    ability2 = models.CharField(max_length=255, null=True, default='')
+    hidden_ability = models.CharField(max_length=255, null=True, default='')
+    hp = models.IntegerField(null=False)
+    attack = models.IntegerField(null=False)
+    defence = models.IntegerField(null=False)
+    special_attack = models.IntegerField(null=False)
+    special_defence = models.IntegerField(null=False)
+    speed = models.IntegerField(null=False)
+    total = models.IntegerField(null=False)
