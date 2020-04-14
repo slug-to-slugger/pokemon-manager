@@ -69,7 +69,11 @@ class Partner(models.Model):
     )
 
     name = models.CharField(max_length=10)  # とりあえず10文字
-    special_skill = models.CharField(max_length=255)  # とりあえず255文字
+    # 特性
+    ability = models.CharField(max_length=255)  # とりあえず255文字
+    # 性格
+    character = models.CharField(max_length=255)
+    # 性別
     gender = models.IntegerField(choices=GENDER_CHOICES, blank=False, null=False, default=1)
     # 努力値
     h = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(252)], blank=False, null=False, default=0)

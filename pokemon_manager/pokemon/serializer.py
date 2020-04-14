@@ -25,7 +25,7 @@ class PartnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Partner
         fields = (
-            'name', 'special_skill', 'gender',
+            'id', 'name', 'ability', 'character', 'gender',
             'h', 'a', 'b', 'c', 'd', 's', 'pokemon', 'updated_at'
         )
 
