@@ -35,13 +35,30 @@ class Trainer(AbstractBaseUser, PermissionsMixin):
 
     def clean(self):
         super().clean()
-        self.login_id = self.__class__.objects.normalize_email(self.login_id)    
+        self.login_id = self.__class__.objects.normalize_email(self.login_id)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+class Pokemon(models.Model):
+    guide_num = models.CharField(max_length=255, null=False)
+    name = models.CharField(max_length=255, null=False)
+    type1 = models.CharField(max_length=255, null=True, default='')
+    type2 = models.CharField(max_length=255, null=True, default='')
+    ability1 = models.CharField(max_length=255, null=True, default='')
+    ability2 = models.CharField(max_length=255, null=True, default='')
+    hidden_ability = models.CharField(max_length=255, null=True, default='')
+    hp = models.IntegerField(null=False)
+    attack = models.IntegerField(null=False)
+    defence = models.IntegerField(null=False)
+    special_attack = models.IntegerField(null=False)
+    special_defence = models.IntegerField(null=False)
+    speed = models.IntegerField(null=False)
+    total = models.IntegerField(null=False)
 
 
 class Partner(models.Model):
@@ -61,27 +78,10 @@ class Partner(models.Model):
     c = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(252)], blank=False, null=False, default=0)
     d = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(252)], blank=False, null=False, default=0)
     s = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(252)], blank=False, null=False, default=0)
-    pokemon_id = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(890)], blank=False, null=False, default=1)
-    # user_info = models.
     created_at = models.DateTimeField(auto_now_add=True)  # レコードが追加された時にその時間を保存します
     updated_at = models.DateTimeField(auto_now=True)  # レコードが更新されたタイミングで現在時間が保存されます。
 
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
+
     class Meta:
         ordering = ['created_at']
-
-
-class Pokemon(models.Model):
-    guide_num = models.CharField(max_length=255, null=False)
-    name = models.CharField(max_length=255, null=False)
-    type1 = models.CharField(max_length=255, null=True, default='')
-    type2 = models.CharField(max_length=255, null=True, default='')
-    ability1 = models.CharField(max_length=255, null=True, default='')
-    ability2 = models.CharField(max_length=255, null=True, default='')
-    hidden_ability = models.CharField(max_length=255, null=True, default='')
-    hp = models.IntegerField(null=False)
-    attack = models.IntegerField(null=False)
-    defence = models.IntegerField(null=False)
-    special_attack = models.IntegerField(null=False)
-    special_defence = models.IntegerField(null=False)
-    speed = models.IntegerField(null=False)
-    total = models.IntegerField(null=False)
