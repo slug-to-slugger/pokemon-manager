@@ -2,7 +2,7 @@ from rest_framework import generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from pokemon.models import Trainer, Partner
+from pokemon.models import Trainer, Partner, Pokemon
 from pokemon.serializer import TrainerSerializer, PartnerSerializer
 
 
@@ -19,10 +19,19 @@ class TrainerDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class PartnerList(generics.ListCreateAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer
 
+    def perform_create(self, serializer):
+        return serializer.save(
+            pokemon=Pokemon.objects.filter(guide_num=self.request.data.get('pokemon_id')).first()
+        )
+
 
 class PartnerDetail(generics.RetrieveUpdateDestroyAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Partner.objects.all()
     serializer_class = PartnerSerializer

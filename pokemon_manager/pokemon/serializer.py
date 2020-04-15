@@ -20,10 +20,14 @@ class TrainerSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PartnerSerializer(serializers.ModelSerializer):
+    pokemon = serializers.ReadOnlyField(source='pokemon.name')
+
     class Meta:
         model = Partner
-        fields = '__all__'
+        fields = (
+            'id', 'name', 'ability', 'character', 'gender',
+            'h', 'a', 'b', 'c', 'd', 's', 'pokemon', 'updated_at'
+        )
 
-    def to_internal_value(self, data):
-        validated = {}
-        return validated
+    def create(self, validated_data):
+        return Partner.objects.create(**validated_data)
