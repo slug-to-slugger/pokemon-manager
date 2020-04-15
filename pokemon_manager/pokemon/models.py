@@ -12,7 +12,7 @@ class Trainer(AbstractBaseUser, PermissionsMixin):
 
     username_validator = UnicodeUsernameValidator()
 
-    username = models.CharField(
+    username = models.EmailField(
         max_length=255,
         unique=True,
         default='',
@@ -21,21 +21,21 @@ class Trainer(AbstractBaseUser, PermissionsMixin):
             'unique': ("A user with that username already exists."),
         },
     )
-    login_id = models.EmailField(max_length=255)
+    nickname = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
 
     objects = UserManager()
 
-    EMAIL_FIELD = 'login_id'
+    EMAIL_FIELD = 'username'
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['login_id']
+    REQUIRED_FIELDS = ['nickname']
 
     class Meta:
         ordering = ['created']
 
     def clean(self):
         super().clean()
-        self.login_id = self.__class__.objects.normalize_email(self.login_id)
+        self.username = self.__class__.objects.normalize_email(self.username)
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

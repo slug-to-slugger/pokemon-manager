@@ -11,7 +11,7 @@ logger = logging.getLogger('development')
 class TrainerSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Trainer
-        fields = ('id', 'username', 'login_id', 'password', 'created')
+        fields = ('id', 'username', 'nickname', 'password', 'created')
 
     def create(self, validated_data):
         password = validated_data.get('password')
