@@ -46,7 +46,7 @@ curl -H "Content-Type: application/json" http://localhost/trainers/ -d '{"userna
 curl -H "Authorization: Token ${POKEMON_API_TOKEN}" http://localhost/pokemons/
 
 # Post partner list
-curl -H "Content-Type: application/json" -H "Authorization: Token ${POKEMON_API_TOKEN}" http://localhost/pokemons/ -d '{"name": "<ニックネーム>", "ability": "<特性>", "character": "<性格>", "gender": <1:♂ 2:♀ 3:その他>, "h": 4, "c": 252, "s": 252, "pokemon_id": "<図鑑番号>"}'
+curl -H "Content-Type: application/json" -H "Authorization: Token ${POKEMON_API_TOKEN}" http://localhost/pokemons/ -d '{"name": "<ニックネーム>", "ability": "<特性>", "character": "<性格>", "gender": <1:♂ 2:♀ 3:その他>, "h": <0 ~ 252>, "a": <0 ~ 252>, "b": <0 ~ 252>, "c": <0 ~ 252>, "d": <0 ~ 252>,  "s": <0 ~ 252>, "pokemon_id": "<図鑑番号>"}'
 
 # Get partner detail
 curl -H "Authorization: Token ${POKEMON_API_TOKEN}" http://localhost/pokemons/<partner_id>/
