@@ -117,8 +117,6 @@ LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'Asia/Tokyo'
 
-DATETIME_FORMAT = 'Y-%m-%d %H:%M:%S'
-
 USE_I18N = True
 
 USE_L10N = False
