@@ -7,9 +7,9 @@ RUN pip install pipenv \
 
 ADD ./uwsgi/conf/pokemon_manager.ini /etc/uwsgi.d/pokemon_manager.ini
 
-COPY ./pokemon_manager /var/www/app/pokemon_manager
+COPY ./app /var/www/app
 
-WORKDIR /var/www/app/pokemon_manager
+WORKDIR /var/www/app
 
 RUN python manage.py collectstatic --noinput
 

@@ -4,11 +4,11 @@ services:
   pokemon_manager:
     container_name: pokemon_manager
     build:
-      context: .
+      context: ./backend
     volumes:
       - socket:/var/run/uwsgi/
       - static:/var/www/static
-      - .:/var/www/app
+      - ./backend/app:/var/www/app
     environment:
       - TZ=Asia/Tokyo
       - UWSGI_LISTEN=128
