@@ -27,7 +27,7 @@ docker exec -t pokemon_manager /bin/sh loaddata.sh
 
 ```sh
 # Get auth token
-curl -H "Content-Type: application/json" http://localhost/api-token-auth/ -d '{"username": "test", "password": "test"}'
+curl -H "Content-Type: application/json" http://localhost/api-token-auth/ -d '{"username": "test@example.com", "password": "test"}'
 # {"token":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
 
 # Set token to environment
@@ -40,7 +40,7 @@ curl http://localhost/trainers/
 curl -H "Authorization: Token ${POKEMON_API_TOKEN}" http://localhost/trainers/<trainer_id>/
 
 # Post trainer
-curl -H "Content-Type: application/json" http://localhost/trainers/ -d '{"username": "test", "password": "test", "login_id": "test@example.com"}'
+curl -H "Content-Type: application/json" http://localhost/trainers/ -d '{"username": "test@example.com", "password": "test", "nickname": "Taro"}'
 
 # Get partner list
 curl -H "Authorization: Token ${POKEMON_API_TOKEN}" http://localhost/pokemons/
