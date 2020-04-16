@@ -21,12 +21,13 @@ class TrainerSerializer(serializers.HyperlinkedModelSerializer):
 
 class PartnerSerializer(serializers.ModelSerializer):
     pokemon = serializers.ReadOnlyField(source='pokemon.name')
+    trainer = serializers.ReadOnlyField(source='trainer.username')
 
     class Meta:
         model = Partner
         fields = (
             'id', 'name', 'ability', 'character', 'gender',
-            'h', 'a', 'b', 'c', 'd', 's', 'pokemon', 'updated_at'
+            'h', 'a', 'b', 'c', 'd', 's', 'pokemon', 'trainer', 'updated_at'
         )
 
     def create(self, validated_data):

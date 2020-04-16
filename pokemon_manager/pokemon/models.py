@@ -85,6 +85,7 @@ class Partner(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # レコードが追加された時にその時間を保存します
     updated_at = models.DateTimeField(auto_now=True)  # レコードが更新されたタイミングで現在時間が保存されます。
 
+    trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name="Partners", null=True)
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE)
 
     class Meta:

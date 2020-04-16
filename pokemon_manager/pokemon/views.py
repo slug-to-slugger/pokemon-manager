@@ -26,6 +26,7 @@ class PartnerList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         return serializer.save(
+            trainer=self.request.user,
             pokemon=Pokemon.objects.filter(guide_num=self.request.data.get('pokemon_id')).first()
         )
 
