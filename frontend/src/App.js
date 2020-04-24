@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    data: [],
+  }
+
+  // Code is invoked after the component is mounted/inserted into the DOM tree.
+  componentDidMount() {
+    const url =
+      'http://localhost/trainers/'
+
+    fetch(url,{
+      // method:"POST"
+      })
+      .then((result) => {
+        return result.json()
+      }).then((result) => {      
+        console.log(result);
+        this.setState({
+          data: result,
+        })
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+    // const result = fetch(url);
+    // console.log("result of fetch");
+    // console.log(result);
+  }
+
+
+  render() {
+    const { data } = this.state
+    
+    console.log(data);
+    console.log(this.state)
+
+    const result = data.map((d) => {
+      return Object.keys(d).map((key) => {
+        return <li key={key}>{d[key]}</li>
+      })
+    })
+
+    return <ul>{result}</ul>
+  }
 }
 
 export default App;
