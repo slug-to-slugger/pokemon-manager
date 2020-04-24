@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'pokemon.apps.PokemonConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'pokemon_manager.urls'
@@ -147,3 +149,12 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'pokemon.Trainer'
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'http://localhost:3000/',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3000/',
+    'http://pokemon-nginx:3000',
+    'http://pokemon-nginx:3000/',
+)

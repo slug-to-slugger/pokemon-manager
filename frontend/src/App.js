@@ -8,16 +8,15 @@ class App extends Component {
   // Code is invoked after the component is mounted/inserted into the DOM tree.
   componentDidMount() {
     const url =
-      'http://pokemon_nginx/trainers/'
+      'http://localhost/trainers/'
 
     fetch(url,{
       // method:"POST"
       })
-      .then(result => result.json())
-      .then((result) => {      
+      .then((result) => {
+        return result.json()
+      }).then((result) => {      
         console.log(result);
-      })
-      .then(result => {
         this.setState({
           data: result,
         })
@@ -37,8 +36,10 @@ class App extends Component {
     console.log(data);
     console.log(this.state)
 
-    const result = data.map((entry, index) => {
-      return <li key={index}>{entry}</li>
+    const result = data.map((d) => {
+      return Object.keys(d).map((key) => {
+        return <li key={key}>{d[key]}</li>
+      })
     })
 
     return <ul>{result}</ul>
