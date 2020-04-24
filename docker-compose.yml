@@ -2,7 +2,7 @@ version: "3"
 
 services:
   pokemon_manager:
-    container_name: pokemon_manager
+    container_name: pokemon-manager
     build:
       context: ./backend
     volumes:
@@ -25,7 +25,7 @@ services:
       - pokemon_manager
 
   nginx:
-    container_name: pokemon_nginx
+    container_name: pokemon-nginx
     image: nginx:1.15-alpine
     volumes:
       - socket:/var/run/uwsgi/
@@ -39,7 +39,7 @@ services:
       - pokemon_manager
 
   mysql:
-    container_name: pokemon_db
+    container_name: pokemon-db
     image: mysql:5.7
     environment:
       MYSQL_DATABASE: 'pokemon_manager'
@@ -57,7 +57,7 @@ services:
       - pokemon_manager
 
   frontend:
-    container_name: pokemon_frontend
+    container_name: pokemon-frontend
     build:
       context: ./frontend
     volumes:
