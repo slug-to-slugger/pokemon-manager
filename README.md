@@ -17,9 +17,9 @@ docker-compose up -d
 ### Insert Pokemon master data (Every time DB data initialized)
 
 ```sh
-docker exec -t pokemon_manager python manage.py makemigrations pokemon
-docker exec -t pokemon_manager python manage.py migrate
-docker exec -t pokemon_manager /bin/sh loaddata.sh
+docker exec -t pokemon-manager python manage.py makemigrations pokemon
+docker exec -t pokemon-manager python manage.py migrate
+docker exec -t pokemon-manager /bin/sh loaddata.sh
 ```
 
 
