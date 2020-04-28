@@ -25,7 +25,11 @@ SECRET_KEY = ')#oxnw+*tbuk8q6sz2+ars@@)um1-)$5)^n6bd#vl49ml4-)j6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'pokemon-nginx',
+]
 
 
 # Application definition
@@ -40,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'pokemon.apps.PokemonConfig',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'pokemon_manager.urls'
@@ -82,7 +88,7 @@ DATABASES = {
         'NAME': 'pokemon_manager',
         'USER': 'pokemon',  # ログインユーザー名
         'PASSWORD': 'pokemon',
-        'HOST': 'pokemon_db',
+        'HOST': 'pokemon-db',
         'PORT': 3306,  # default
         'OPTIONS': {
             'charset': 'utf8mb4'
@@ -143,3 +149,9 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'pokemon.Trainer'
+
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
+    'http://pokemon-nginx:3000',
+)
